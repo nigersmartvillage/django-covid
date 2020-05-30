@@ -231,7 +231,7 @@ ORB_INFO_EMAIL = 'orb@example.com'
 ORB_PAGINATOR_DEFAULT = 20
 ORB_RESOURCE_MIN_RATINGS = 3
 TASK_UPLOAD_FILE_TYPE_BLACKLIST = ['application/vnd.android']
-TASK_UPLOAD_FILE_MAX_SIZE = 5242880
+TASK_UPLOAD_FILE_MAX_SIZE = 20971520
 STAGING = False  # used for version context processor
 IP_STACK_API_KEY = '' # set this in your local_settings.py
 #####################################################################

@@ -29,7 +29,7 @@ class ResourceStep1Form(forms.Form):
         error_messages={'required': _('Please enter a title')},)
     organisations = forms.CharField(
         label=_('Organisations'),
-        help_text=_('Comma separated if entering more than one organisation'),
+        help_text=_('Please add a comma at the end of each entry.'),
         required=True,
         error_messages={'required': _('Please enter at least one organisation')},)
     description = forms.CharField(
@@ -62,13 +62,13 @@ class ResourceStep1Form(forms.Form):
     geography = forms.CharField(
         label=_('Geography'),
         required=True,
-        help_text=_('The geographic area the resource is designed for, may be region e.g. ("Africa", "East Africa") or country (e.g. "Ethiopia", "Mali"). Comma separated if entering more than one geography'),
+        help_text=_('The geographic area the resource is designed for, may be region e.g. ("Africa", "East Africa") or country (e.g. "Ethiopia", "Mali"). Please add a comma at the end of each entry.'),
         error_messages={'required': _('Please enter at least one geographical area')},)
     languages = forms.CharField(
         label=_('Languages'),
         required=True,
         help_text=_(
-           'The languages the resource uses. Comma separated if entering more than one language'),
+           'The languages the resource uses. Please add a comma at the end of each entry.'),
         error_messages={'required': _('Please enter at least one language')},)
     device = forms.MultipleChoiceField(
         label=_('Device'),
@@ -84,11 +84,11 @@ class ResourceStep1Form(forms.Form):
     other_tags = forms.CharField(
         label=_('Other tags'),
         help_text=_(
-           'Please enter any other relevant tags for this resource, comma separated if entering more than one tag'),
+           'Please enter any other relevant tags for this resource. Please add a comma at the end of each entry.'),
         required=False,
     )
     terms = forms.BooleanField(
-        label=_("<span>Please tick the box to confirm that you have read the <a href='/resource/guidelines/' target='_blank' class='prominent'>guidelines and criteria</a> for submitting resources to ORB</span>"),
+        label=_("<span>Please tick the box to confirm that you have read the <a href='/resource/guidelines/' target='_blank' class='prominent'>guidelines and criteria</a> for submitting resources to the COVID-19 Library</span>"),
         required=True,
         error_messages={'required': _('Please tick the box to confirm that you have read the guidelines for submitting resources to COVID-19 Library')})
     study_time_number = forms.IntegerField(
