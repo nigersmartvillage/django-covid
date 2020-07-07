@@ -91,3 +91,52 @@ source controlled settings. By doing so it may override the base settings or add
 You should go through this file and address the items commented for your attention, including
 the Django "secret key" (you can change to arbitrarily random text), various email addresses,
 and the allowed host names.
+
+Deploying to an existing server
+===============================
+
+The Covid Library application can be deployed to an existing server or using a
+custom configuration. The AMI ships with the following software versions,
+and while other versions will likely work just as well, they have not been
+tested.
+
+- Ubuntu 16.04 LTS
+- Apache 2.4
+- Python 3.6
+- libapache2-mod-wsgi-py3 4.3
+- MySQL 5.7
+- Solr 4.10
+
+The only hard requirement for custom deployments is that you use Python 3.6.
+
+Alternative combinations could use `Gunicorn <https://gunicorn.org/>`_ proxied behind
+`Nginx <https://nginx.org/>`_, use PostgreSQL (not tested, but there are no MySQL
+specific features used by the library), and use a different Solr version or search
+engine altogether. The latter may be appealing given that the version of Solr here
+is not current, however changing the Solr version or search engine would require
+changes to the search engine index templates.
+
+At a high level, the outline of the steps for installing and running on a separate
+server would look like the following:
+
+1. Establish an application project directory
+2. In this directory clone the project Git repository into `django-covid`
+3. Create a Python virtual environment named `env` here, `python3.6 -m virtualenv env --python=$(which python3.6)`
+   (specifying the Python path using the `--path` option ensures the correct Python version for the environment)
+4. Active the virtual environment and install the requirements (`source env/bin/activate && cd django-covid && pip install -r requirements.txt`)
+5. Add a local settings file in `django-covid/config/local_settings.py` and use this to override
+   project specific settings such as `DATABASES`, `SECRET_KEY`, etc. A sample can be found in
+   the `deployment/` directory. You will need to set up media and static file directories,
+   respectively, and ensure that your application's system user has read and write access to these
+   directories and that they are mapped in your webserver host configuration (again, refer to
+   the included Ansible Apache host templates here).
+6. Either install `mod_wsgi` and enable in Apache and follow the WSGI settings in the Ansible
+   templates here OR set up a different application server. If you are using Nginx then Gunicorn
+   or `uWSGI <https://uwsgi-docs.readthedocs.io/en/latest/>`_ are good choices for serving the
+   Django application. Setting these up is beyond the scope of these docs.
+7. You will need to migrate your database using the `python manage.py migrate` command from the
+   application root (i.e. the cloned repository) and collect static files from various installed
+   Django apps (e.g. the core `orb` installation itself, the Django admin app, etc) into your
+   configured static files directory (`python manage.py collectstatic --noinput`)
+
+
