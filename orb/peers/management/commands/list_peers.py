@@ -24,14 +24,14 @@ class Command(BaseCommand):
         if not summary:
             print("No peers have been registered.")
 
-        if summary["queryable"]:
+        if summary.get("queryable"):
             print("\nQueryable peers\n")
             for peer in summary["queryable"]:
                 print("[{}] {}, {}".format(peer.pk, peer.name, peer.host))
 
-        if summary["inactive"] or summary["unqueryable"]:
+        if summary.get("inactive") or summary.get("unqueryable"):
             print("\nUnqueryable peers (will not be synced)\n")
-            for peer in summary["inactive"]:
+            for peer in summary.get("inactive", []):
                 print("[{}] {}, {} - inactive".format(peer.pk, peer.name, peer.host))
-            for peer in summary["unqueryable"]:
+            for peer in summary.get("unqueryable", []):
                 print("[{}] {}, {} - missing credentials".format(peer.pk, peer.name, peer.host))

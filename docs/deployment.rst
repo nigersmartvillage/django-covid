@@ -70,6 +70,19 @@ and your custom domain.
 If this ran successfully your site should now be accessible over HTTPS from your
 custom domain.
 
+Creating your user
+------------------
+
+To add your own accessible user, run the `add_super_user` management command.
+This command can be called with two flag based arguments, `--email` and `--password`,
+to create a new user with the `email` arg as both email and username, and setting
+the given password.
+
+You can call this without arguments and it will run the built-in Django
+`createsuperuser` command, prompting you for username, email, and confirmed
+password, and then creating the initial UserProfile. This requires slightly
+more information but is marginally more secure.
+
 Subsequent updates and working with the deployment
 ==================================================
 
