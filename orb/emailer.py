@@ -52,7 +52,7 @@ def user_welcome(to_user):
     template_text = 'orb/email/welcome.txt'
 
     from_email = settings.SERVER_EMAIL
-    subject = settings.EMAIL_SUBJECT_PREFIX + _("Welcome to ORB")
+    subject = settings.EMAIL_SUBJECT_PREFIX + _("Welcome to the COVID-19 Library")
 
     data = {"firstname": to_user.first_name,
             "lastname": to_user.last_name,
