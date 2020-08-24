@@ -3,8 +3,10 @@
 
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block extra_scripts %}
+<link rel="stylesheet" type="text/css" href="{% static 'orb/smartvillage.css' %}" />
 {% endblock extra_scripts %}
 {% block extra_head_title %}{% trans 'Add Resource - Step 2' %}{% endblock extra_head_title %}
 
