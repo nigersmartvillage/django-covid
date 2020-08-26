@@ -42,25 +42,28 @@
 	<a href="{% url 'orb_resource_create' %}" class="type:minor--face:copy--weight:900 color:neutral fx:shift NewResource" at-wide="type:base"><b>+</b>{% trans 'Add a Resource' %}</a>
 </li>
 </div>
+
 	<ul xv-html="indexBlocks" class="Landing-categories motif:tint LandingSmall"  at-base="flex:v pad:xyEq50 rhy:yStart50" at-compressed="flex:h grid:vAuto rhy:yStart0">
 
 
-	{% for t in topics %}
-{% if not t.custom %}
-<li class="liCategoryCard">
+		{% for t in topics %}
+	{% if not t.custom %}
+	<li class="liCategoryCard">
+		<a href="{% url 'orb_tags' t.tag.slug %}" >
+		<article at-base="module:static" class="CategoryCard motif:bright {{t.tag.name}}"><header class="CategoryCard-header" at-base="module:fill flex:v--p:start pad:xyEq50 rhy:xStart50"><img alt="{{ t.tag.name }}" style="width:53px !important; height:55px !important;max-width:53px !important; max-height:55px !important;" src="{% thumbnail t.tag.image '53x53' format='PNG' crop='center' as im %}{{ im.url }}{% endthumbnail %}" class="color:primary LandingSmallImg" ><h3 class="type:base--face:hed--weight:900 color:dark NewBox" at-compressed="type:chrome--set:typePreWrap" at-economy="type:minor" at-enhanced="type:base" style="padding-top:10px">{{ t.tag.name }}</h3></header><footer class="CategoryCard-footer motif:primary" at-base="flex:h grid:h"><p class="type:minor--face:hed--weight:700 ResourcesNote"  at-base="module:fill flex:h--p:start--s:middle pad:xyEq50" at-compressed="type:chrome" at-economy="type:minor" >{% blocktrans count t.resource_count as resource_count %}{{ resource_count }} resource{% plural %}{{ resource_count }} resources{% endblocktrans %}</p></footer></article>
+	</a>
+	</li>
+	{% else %}
+	<li>
 	<a href="{% url 'orb_tags' t.tag.slug %}" >
-	<article at-base="module:static" class="CategoryCard motif:bright {{t.tag.name}}"><header class="CategoryCard-header" at-base="module:fill flex:v--p:start pad:xyEq50 rhy:xStart50"><img alt="{{ t.tag.name }}" style="width:53px !important; height:55px !important;max-width:53px !important; max-height:55px !important;" src="{% thumbnail t.tag.image '53x53' format='PNG' crop='center' as im %}{{ im.url }}{% endthumbnail %}" class="color:primary LandingSmallImg" ><h3 class="type:base--face:hed--weight:900 color:dark NewBox" at-compressed="type:chrome--set:typePreWrap" at-economy="type:minor" at-enhanced="type:base" style="padding-top:10px">{{ t.tag.name }}</h3></header><footer class="CategoryCard-footer motif:primary" at-base="flex:h grid:h"><p class="type:minor--face:hed--weight:700 ResourcesNote"  at-base="module:fill flex:h--p:start--s:middle pad:xyEq50" at-compressed="type:chrome" at-economy="type:minor" >{% blocktrans count t.resource_count as resource_count %}{{ resource_count }} resource{% plural %}{{ resource_count }} resources{% endblocktrans %}</p></footer></article>
-</a>
-</li>
-{% else %}
-<li>
-<a href="{% url 'orb_tags' t.tag.slug %}" >
-	<article at-base="module:static" class="CategoryCard motif:bright"><header class="CategoryCard-header" at-base="module:fill flex:h--p:start--s:middle pad:xyEq50 rhy:xStart50"><img alt="{{ t.title }}" src="{% get_static_prefix %}orb/images/{{ t.image }}" class="color:primary" at-base="aspect:xyEq200--rhy" at-compressed="aspect:xyEq150--rhy" at-economy="aspect:xyEq200--rhy"><h3 class="type:base--face:hed--weight:900 color:dark" at-compressed="type:chrome--set:typePreWrap" at-economy="type:minor" at-enhanced="type:base">{{ t.title }}</h3></header><footer class="CategoryCard-footer motif:primary" at-base="flex:h grid:h"><p class="type:minor--face:hed--weight:700 color:dark" at-base="module:fill flex:h--p:start--s:middle pad:xyEq50" at-compressed="type:chrome" at-economy="type:minor">{% blocktrans count t.resource_count as resource_count %}{{ resource_count }} resource{% plural %}{{ resource_count }} resources{% endblocktrans %}</p><a href="{{ t.url }}" class="type:base--face:hed--weight:900 control:primary--link fx:shift fx:bounds" at-base="flex:v--p:start--s:middle pad:xyEq50" at-compressed="type:chrome" at-economy="type:minor pad:xEq100 pad:yEq50"><span>Browse</span></a></footer></article>
-</a>
-</li>
-{% endif %}
-{% endfor %}
-</ul></div></main>
+		<article at-base="module:static" class="CategoryCard motif:bright"><header class="CategoryCard-header" at-base="module:fill flex:h--p:start--s:middle pad:xyEq50 rhy:xStart50"><img alt="{{ t.title }}" src="{% get_static_prefix %}orb/images/{{ t.image }}" class="color:primary" at-base="aspect:xyEq200--rhy" at-compressed="aspect:xyEq150--rhy" at-economy="aspect:xyEq200--rhy"><h3 class="type:base--face:hed--weight:900 color:dark" at-compressed="type:chrome--set:typePreWrap" at-economy="type:minor" at-enhanced="type:base">{{ t.title }}</h3></header><footer class="CategoryCard-footer motif:primary" at-base="flex:h grid:h"><p class="type:minor--face:hed--weight:700 color:dark" at-base="module:fill flex:h--p:start--s:middle pad:xyEq50" at-compressed="type:chrome" at-economy="type:minor">{% blocktrans count t.resource_count as resource_count %}{{ resource_count }} resource{% plural %}{{ resource_count }} resources{% endblocktrans %}</p><a href="{{ t.url }}" class="type:base--face:hed--weight:900 control:primary--link fx:shift fx:bounds" at-base="flex:v--p:start--s:middle pad:xyEq50" at-compressed="type:chrome" at-economy="type:minor pad:xEq100 pad:yEq50"><span>Browse</span></a></footer></article>
+	</a>
+	</li>
+	{% endif %}
+	{% endfor %}
+	</ul>
+
+</div></main>
 
 {% include 'covid/nav.html' %}
 {% include 'covid/footer.html' %}

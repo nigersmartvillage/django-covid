@@ -5,6 +5,9 @@
 {% load static %}
 {% load thumbnail %}
 
+{% block extra_styles %}
+<link href="{% static 'orb/homeextrastyle.css' %}" rel="stylesheet"/>
+{% endblock extra_styles %}
 
 {% block extra_head_title %}{% trans 'SmartVillage digital Library' %}{% endblock extra_head_title %}
 
