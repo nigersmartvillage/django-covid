@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load static %}
 <div style="border-bottom:1px solid #f5f5f5;width:100%;height:1px;background-color:#fff">&nbsp;</div>
 <div x-bind:class="{ 'is-active': extNavOpen }" at-base="iflex:v put:xyEq--set:fix--set:zModal" at-economy="optics:no" class="ExtendedNavigation-wrapper">
 
@@ -56,3 +57,27 @@
 	</li>
 </ul>
 </footer></div><script>(function(){var e="ss-widget",t="script",a=document,r=window;var s,n,c;r.SS_WIDGET_TOKEN="tt-34decb";r.SS_ACCOUNT="lastmilehealth.surveysparrow.com";r.SS_SURVEY_NAME="covid19librarysurvey";if(!a.getElementById(e)){var S=function(){S.update(arguments)};S.args=[];S.update=function(e){S.args.push(e)};r.SparrowLauncher=S;s=a.getElementsByTagName(t);c=s[s.length-1];n=a.createElement(t);n.type="text/javascript";n.async=!0;n.id=e;n.src=["https://","lastmilehealth.surveysparrow.com/widget/",r.SS_WIDGET_TOKEN].join("");c.parentNode.insertBefore(n,c)}})();</script>
+
+<script src="{% static 'orb/js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'orb/bootstrap-3.1.1/js/bootstrap.min.js' %}"></script>
+<script>
+    $(".language-selection").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url : "{% url 'set_language' %}",
+            type: "POST",
+            data : {
+                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                language: $(this).data("code"),
+                next: window.location.href
+            },
+            dataType : "json",
+            success: function(){
+                location.reload();
+            },
+            error: function(){
+                location.reload();
+            }
+        });
+    });
+</script>

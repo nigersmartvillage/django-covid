@@ -1,12 +1,142 @@
 {% load i18n %}
 {% load static %}
+{% load crispy_forms_tags %}
 <nav at-base="optics:a11y" at-economy="optics:yes module:static--index:init--set:zRunners flex:h--p:start--s:middle pad:xEq100"  class="SiteNavigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse"
+            data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+        <span class="icon-bar"></span> <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="{% url 'orb_home' %}" style="margin-top:-20px">
+    <img src="{% static 'orb/images/red-logo.png' %}" height="60px" alt="{%  trans 'COVID-19 Library' %}"/>
+    
+    </a>
+</div>
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown"><a href="#" data-toggle="dropdown"
+                                class="dropdown-toggle">{% trans 'Browse Resources' %} <b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+              {% for category, category_tags in header_menu_categories.items %}
+                {% if category_tags|length != 1 %}
+                  <li style="padding: 3px 20px;"><strong>{{ category }}</strong></li>
+                {% endif %}
+                {% for t in category_tags %}
+                    <li
+                      {% if forloop.last %}
+                        style="border-bottom: 1px solid #c0c0c0;
+                        margin-bottom: 10px;
+                        padding-bottom: 10px;"
+                      {% endif %}
+                        ><a href="{% url 'orb_tags' t.slug %}">{{ t.name }}</a></li>
+                {% endfor %}
+            {% endfor %}
+            </ul>
+        </li>
+
+        <li><a href="{% url 'orb_resource_create' %}">{% trans 'Add Resource' %}</a></li>
 
 
-  <ul at-base="iflex:h--p:start--s:middle" at-enhanced="pad:xEnd100" at-standard="pad:xyEq150" at-wide="pad:xEndFull rhy:xStart200" class="NewNav" ><!---->
-    <li class="col1header" style="display:contents;width:100px;display:contents">
-      <a href="/"><img style="width:180px !important;max-width:180px !important" src="{% static 'orb/images/red-logo.png' %}"/></a>
-      
-  </li>
-    <li at-base="module:static" style="margin-left:130px;width:230px !important"><div x-data="{ open: false }" at-base="flex:vAuto module:static" class="DropdownControl"><button type="button" at-base="flex:h--p:middle--s:middle rhy:xStart25 module:balance" x-on:click="open = true" class="DropdownControl-toggle list-elementListEnd"><span at-wide="type:base" class="type:minor--face:copy--weight:900 color:neutral fx:shift MenuText">{% trans 'Browse Categories' %}</span></button><ul x-show="open" x-on:click.away="open = false" at-base="put:xEnd-yEnd--set:abs--set:zAbove iflex:v" class="DropdownControl-list motif:primary list--listEnd" style="display:none;">{% for category, category_tags in header_menu_categories.items %}{% for t in category_tags %}<li at-base="module:static" class="DropdownControl-item motif:primary" style="background-color:#fff !important"><a href="{% url 'orb_tags' t.slug %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{{ t.name }}</a></li>{% endfor %}{% endfor %}</ul></div></li><!----><!----><li  class="col3header" at-base="module:static"><a href="{% url 'orb_resource_create' %}" class="type:minor--face:copy--weight:900 color:neutral fx:shift MenuText" at-wide="type:base">{% trans 'Add resources' %}</a></li><!----><!----><li at-base="module:static" class="col4header"><div x-data="{ open: false }" at-base="flex:vAuto module:static" class="DropdownControl"><button type="button" at-base="flex:h--p:middle--s:middle rhy:xStart25 module:balance" x-on:click="open = true" class="DropdownControl-toggle list-elementListEnd"><span at-wide="type:base" class="type:minor--face:copy--weight:900 color:neutral fx:shift MenuText">{% trans 'Help' %}</span></button><ul  style="width:200px ; !important" x-show="open" x-on:click.away="open = false" at-base="put:xEnd-yEnd--set:abs--set:zAbove iflex:v" class="DropdownControl-list motif:primary list--listEnd" style="display:none;"><!----><li at-base="module:static" class=""><a href="{% url 'orb_how_to' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'How to use Digital Library' %}</a></li><!----><!----><li style="background-color:#fff !important"at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_guidelines' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift" >{% trans 'Resource Guidelines' %}</a></li><!----><!----><li style="background-color:#fff !important"at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_content_review_process' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Content Review Process' %}</a></li><!----><!----><li style="background-color:#fff !important"at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_cc_faq' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Creative Commons FAQs' %}</a></li><!----></ul></div></li><!---->{% if header_owns_tags or user.is_staff %}<li at-base="module:static" class="col5header"><div x-data="{ open: false }" at-base="flex:vAuto module:static" class="DropdownControl" style="display: -webkit-inline-box"><button type="button" at-base="flex:h--p:middle--s:middle rhy:xStart25 module:balance" x-on:click="open = true" class="DropdownControl-toggle list-elementListEnd"><span at-wide="type:base" class="type:minor--face:copy--weight:900 color:neutral fx:shift MenuText" style="width:100%">{% trans 'Analytics' %}</span></button><ul x-show="open" x-on:click.away="open = false" at-base="put:xEnd-yEnd--set:abs--set:zAbove iflex:v" class="DropdownControl-list motif:primary list--listEnd" style="display:none;">{% for h in header_owns_tags %}<liMy Covid L at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_analytics_tag' h.tag.id %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:500 color:bright fx:shift" style="background-color:#fff !important">{{ h.tag.name }}</a></li>{% endfor %}{% if user.is_staff %}<li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_analytics_home' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:500 color:bright fx:shift" style="background-color:#fff">{% trans 'Site analytics' %}</a></li>{% endif %}{% if user.is_staff %}<li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_analytics_visitor' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:500 color:bright fx:shift"  style="background-color:#fff">{% trans 'Monthly Analytics' %}</a></li>{% endif %}{% if user.is_staff %}<li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_analytics_kpi' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:500 color:bright fx:shift"  style="background-color:#fff">{% trans 'KPI Report' %}</a></li>{% endif %}{% if user.is_staff or reviewer %}<li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_pending_resources' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:500 fx:shift" style="color:#000;background-color:#fff">{% trans 'Pending Resources' %}</a></li>{% endif %}</ul></div></li>{% endif %}{% if user.is_authenticated %}<li at-base="module:static" class= "col6header"><div x-data="{ open: false }" at-base="flex:vAuto module:static" class="DropdownControl"><button type="button" at-base="flex:h--p:middle--s:middle rhy:xStart25 module:balance" x-on:click="open = true" class="DropdownControl-toggle list-elementListEnd"><span at-wide="type:base" class="type:minor--face:copy--weight:900 color:neutral fx:shift MenuText" style="width:140px !important">{% trans 'My COVID-19 Library' %}</span></button><ul x-show="open" x-on:click.away="open = false" at-base="put:xEnd-yEnd--set:abs--set:zAbove iflex:v" class="DropdownControl-list motif:primary list--listEnd" style="display:none;"><!----><li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'my_profile_view' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift ">{% trans 'View Profile' %}</a></li><!----><!----><li style="background-color:#fff !important"at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'my_profile_edit' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Edit Profile' %}</a></li><!----><!----><li style="background-color:#fff !important" at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'my_ratings_view' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Rated' %}</a></li><!---->{% if user.userprofile.is_reviewer %}<li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'orb_user_reviews' %}" style="background-color:#fff !important" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Resource Reviews' %}</a></li>{% endif %}<!----><li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'my_bookmarks_view' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" style="background-color:#fff !important" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift" >{% trans 'Bookmarks' %}</a></li><!---->{% if user.is_superuser %}<li at-base="module:static" style="background-color:#fff !important" class="DropdownControl-item motif:primary"><a href="{% url 'admin:index' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Django Admin' %}</a></li>{% endif %}<!----><li at-base="module:static" class="DropdownControl-item motif:primary"><a href="{% url 'profile_logout' %}" at-base="flex:h--p:start--s:middle rhy:xStart75 module:static pad:xEq50 pad:yEq25" at-wide="type:base" style="background-color:#fff !important" class="type--set:typeNoWrap type:minor--face:hed--weight:700 color:bright fx:shift">{% trans 'Logout' %}</a></li><!----></ul></div></li>{% endif %}{% if not user.is_authenticated %}<li at-base="module:static" class="col5header"><a class="RegisterText" href="{% url 'profile_register' %}" class="type:minor--face:copy--weight:900 color:neutral fx:shift" at-wide="type:base">{% trans 'Register' %}</a></li>{% endif %}{% if not user.is_authenticated %}<li at-base="module:static" class="col6header"><a href="{% url 'profile_login' %}" class="LoginText" at-wide="type:base" style="margin-left:10px">{% trans 'Login' %}</a></li>{% endif %}</ul>
+        {% if header_owns_tags or user.is_staff %}
+            <li class="dropdown"><a href="#" data-toggle="dropdown"
+                                    class="dropdown-toggle">{% trans 'Analytics' %} <b
+                class="caret"></b></a>
+            <ul class="dropdown-menu">
+                {% for h in header_owns_tags %}
+                    <li>
+                        <a href="{% url 'orb_analytics_tag' h.tag.id %}">{{ h.tag.name }}</a>
+                    </li>
+                {% endfor %}
+                {% if user.is_staff %}
+                    <li>
+                        <a href="{% url 'orb_analytics_home' %}">{% trans 'Site analytics' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'orb_analytics_visitor' %}">{% trans 'Monthly Analytics' %}</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'orb_analytics_kpi' %}">{% trans 'KPI Report' %}</a>
+                    </li>
+                {% endif %}
+                {% if user.is_staff or reviewer %}
+                    <li>
+                        <a href="{% url 'orb_pending_resources' %}">{% trans 'Pending Resources' %}</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <li class="dropdown"><a href="#" data-toggle="dropdown"
+                                    class="dropdown-toggle">{% trans 'My COVID-19 Library' %} <b
+                    class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'my_profile_view' %}">{% trans 'View Profile' %}</a>
+                    </li>
+                    <li><a href="{% url 'my_profile_edit' %}">{% trans 'Edit Profile' %}</a>
+                    </li>
+                    <li><a href="{% url 'my_ratings_view' %}">{% trans 'Rated' %}</a></li>
+                    {% if user.userprofile.is_reviewer %}
+                        <li><a href="{% url 'orb_user_reviews' %}">{% trans 'Resource Reviews' %}</a>
+                        </li>
+                    {% endif %}
+                    <li><a href="{% url 'my_bookmarks_view' %}">{% trans 'Bookmarks' %}</a>
+                    </li>
+                    {% if user.is_superuser %}
+                      <li><a href="{% url 'admin:index' %}">{% trans 'Django Admin' %}</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'profile_logout' %}">{% trans 'Logout' %}</a>
+                    </li>
+                </ul>
+            </li>
+        {% else %}
+            <li><a href="{% url 'profile_login' %}">{% trans 'Login' %}</a></li>
+            <li><a href="{% url 'profile_register' %}">{% trans 'Register' %}</a></li>
+        {% endif %}
+
+      {# Help section #}
+      <li class="dropdown">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle">{% trans 'Help' %}
+          <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'orb_how_to' %}">{% trans 'How to use COVID-19 Library' %}</a></li>
+          <li><a href="{% url 'orb_guidelines' %}">{% trans 'Resource Guidelines' %}</a></li>
+          <li><a href="{% url 'orb_content_review_process' %}">{% trans 'Content Review Process' %}</a></li>
+          <li><a href="{% url 'orb_cc_faq' %}">{% trans 'Creative Commons FAQs' %}</a></li>
+          {#                  <li><a href="https://mpowering.readthedocs.io/">{% trans 'Technical Documentation' %}</a></li>#}
+          {#                  <li><a href="{% url 'orb_partners' %}">{% trans 'Content Partners' %}</a></li>#}
+          {#                  <li><a href="{% url 'orb_about' %}">{% trans 'About COVID-19 Library' %}</a></li>#}
+        </ul>
+      </li>
+
+
+        {% csrf_token %}
+        {% get_available_languages as languages %}
+        {% if languages|length > 1 %}
+        <li class="dropdown"><a href="#" data-toggle="dropdown"
+                                class="dropdown-toggle">{% trans 'Language' %} ({{ LANGUAGE_CODE }}) <b class="caret"></b></a>
+            <ul class="dropdown-menu" id="language-selection">
+                {% for language in languages %}
+                    {% if language.0 != LANGUAGE_CODE %}
+                    <li>
+                        <a href="{% url 'set_language' %}" data-code="{{ language.0 }}" class="language-selection">
+                            {{ language.1 }} ({{ language.0 }})
+                        </a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+
+    </ul>
+</div>
+
+  
   </nav>

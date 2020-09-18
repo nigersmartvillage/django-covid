@@ -1,5 +1,5 @@
 {% extends "covid/form.html" %}
-{% comment %} {% extends "base.html" %} {% endcomment %}
+<!-- {% comment %} {% extends "base.html" %} {% endcomment %} -->
 {% load i18n static crispy_forms_tags wysiwyg %}
 
 {% block extra_head_title %}{% trans 'Add Resource' %}{% endblock extra_head_title %}
@@ -31,4 +31,28 @@
 <script src="{% static 'orb/js/jquery-1.11.0.min.js' %}"></script>
 <script src="{% static 'orb/bootstrap-3.1.1/js/bootstrap.min.js' %}"></script>
 {% include "orb/includes/tag_autocomplete_init.html" %}
+<script src="{% static 'orb/js/jquery-1.11.0.min.js' %}"></script>
+<script src="{% static 'orb/bootstrap-3.1.1/js/bootstrap.min.js' %}"></script>
+<script>
+    $(".language-selection").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url : "{% url 'set_language' %}",
+            type: "POST",
+            data : {
+                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                language: $(this).data("code"),
+                next: window.location.href
+            },
+            dataType : "json",
+            success: function(){
+                location.reload();
+            },
+            error: function(){
+                location.reload();
+            }
+        });
+    });
+</script>
+
 {% endblock %}
